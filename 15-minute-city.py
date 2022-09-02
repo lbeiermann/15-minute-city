@@ -13,7 +13,6 @@ from shapely.geometry import Point
 from shapely.geometry import Polygon
 import folium
 import osmnx.utils_graph
-import sklearn
 
 #%matplotlib inline
 
