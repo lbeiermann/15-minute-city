@@ -36,8 +36,11 @@ travel_speed = 4.8  # walking speed in km/hour
 # configure submit button
 #submit = st.button("Generate map")
 
-if place:
-    with st.spinner("Getting there..."):
+prev_entry = ""
+
+if place != prev_entry:
+    place = prev_entry
+    with st.spinner("Getting there at 4.8 km/h..."):
 
         # download the street network
         G = ox.graph_from_address(place, network_type=network_type)
