@@ -85,7 +85,7 @@ if place:
         m = (
             osmnx.utils_graph.graph_to_gdfs(G, nodes=False)
             .loc[:, ["name", "geometry"]]
-            .explore(name="edges", m=m, height=400, width=725)
+            .explore(name="edges", m=m)
         )
 
         # isochrones,  NB CRS
