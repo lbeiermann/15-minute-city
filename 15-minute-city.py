@@ -37,9 +37,9 @@ trip_times = [15, 10, 5]  # in minutes
 travel_speed = 4.8  # walking speed in km/hour
 
 # configure submit button
-submit = st.button("Generate map")
+#submit = st.button("Generate map")
 
-if submit:
+if place:
     with st.spinner("Getting there..."):
 
         # download the street network
@@ -111,5 +111,5 @@ if submit:
 
         folium.LayerControl().add_to(m)
 
-st_data = st_folium(m)
+    st_data = st_folium(m)
 
