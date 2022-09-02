@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+from streamlit_folium import st_folium
 import folium
 import mapclassify
 import matplotlib
@@ -111,5 +112,5 @@ if submit:
         folium.LayerControl().add_to(m)
         m
 
-
+        st_data = st_folium(m)
 
