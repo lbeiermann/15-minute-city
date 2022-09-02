@@ -110,7 +110,6 @@ if submit:
         m.fit_bounds(m.get_bounds(), padding=(30, 30))
 
         folium.LayerControl().add_to(m)
-        m
 
-        st_data = st_folium(m)
+    st_data = st_folium(m)
 
