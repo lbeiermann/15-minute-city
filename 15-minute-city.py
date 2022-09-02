@@ -38,7 +38,7 @@ trip_times = [15, 10, 5]  # in minutes
 travel_speed = 4.8  # walking speed in km/hour
 
 # configure submit button
-submit = form.form_submit_button("Generate map")
+submit = st.button("Generate map")
 
 if submit:
     with st.spinner("Getting there..."):
