@@ -21,11 +21,7 @@ from shapely.geometry import Point
 st.title("The 15-Minute-Map")
 
 # display subtitle
-st.subheader("Mapping the 15-minute city.")
-
-# display about this app
-with st.expander("About this app", expanded=False):
-    st.write("Use this app to map all local amenities you can reach via a 5-/10-/15-minute walk from any address in the world.")
+st.subheader("Mapping the 15-minute city. Use this app to map all local amenities you can reach via a 5-/10-/15-minute walk from any address in the world")
 
 # enter address
 place = st.text_input("Enter street address")
