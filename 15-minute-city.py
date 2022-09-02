@@ -17,8 +17,8 @@ from shapely.geometry import Point
 
 ox.config(log_console=False, use_cache=True)
 
-# display title
-st.title("The 15-Minute-Map 🗺️")
+# title and layout
+st.set_page_config(layout="wide", page_title="The 15-Minute-Map 🗺️")
 
 # display text
 st.write("Mapping the 15-minute city: Use this app to map all local amenities you can reach via a 5-/10-/15-minute walk from any address in the world!")
