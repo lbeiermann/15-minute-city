@@ -39,7 +39,7 @@ travel_speed = 4.8  # walking speed in km/hour
 prev_entry = ""
 
 if place != prev_entry:
-    place = prev_entry
+    prev_entry = place
     with st.spinner("Getting there at 4.8 km/h..."):
 
         # download the street network
