@@ -18,10 +18,10 @@ from shapely.geometry import Point
 #ox.config(log_console=False, use_cache=True)
 
 # display title
-st.title("The 15-Minute-Map")
+st.title("The 15-Minute-Map 🗺️")
 
-# display subtitle
-st.subheader("Mapping the 15-minute city. Use this app to map all local amenities you can reach via a 5-/10-/15-minute walk from any address in the world")
+# display text
+st.write("Mapping the 15-minute city. Use this app to map all local amenities you can reach via a 5-/10-/15-minute walk from any address in the world")
 
 # enter address
 place = st.text_input("Enter street address")
@@ -107,5 +107,5 @@ if place:
 
         folium.LayerControl().add_to(m)
 
-    st_data = st_folium(m)
+    st_data = st_folium(m, width=725)
 
