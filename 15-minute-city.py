@@ -111,5 +111,5 @@ if submit:
 
         folium.LayerControl().add_to(m)
 
-    st_data = st_folium(m)
+st_data = st_folium(m)
 
