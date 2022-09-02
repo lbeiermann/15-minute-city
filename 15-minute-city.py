@@ -18,7 +18,7 @@ from shapely.geometry import Point
 ox.config(log_console=False, use_cache=True)
 
 # title and layout
-st.set_page_config(layout="wide", page_title="The 15-Minute-Map 🗺️")
+st.set_page_config(page_title="The 15-Minute-Map 🗺️")
 st.title("The 15-Minute-Map 🗺️")
 
 # display text
@@ -54,7 +54,7 @@ if place:
             data["time"] = data["length"] / meters_per_minute
 
         # get one color for each isochrone
-        iso_colors = ox.plot.get_colors(n=len(trip_times), cmap="autumn", start=0, return_hex=True)
+        iso_colors = ox.plot.get_colors(n=len(trip_times), cmap="Blues", start=0, return_hex=True)
 
         # make the isochrone polygons
         isochrone_polys = []
