@@ -108,5 +108,5 @@ if place:
 
         folium.LayerControl().add_to(m)
 
-    st_data = st_folium(m, height=400, width=1000)
+    st_data = st_folium(m, width=725)
 
