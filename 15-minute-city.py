@@ -54,7 +54,7 @@ if place:
             data["time"] = data["length"] / meters_per_minute
 
         # get one color for each isochrone
-        iso_colors = ox.plot.get_colors(n=len(trip_times), cmap="Blues", start=0, return_hex=True)
+        iso_colors = ox.plot.get_colors(n=len(trip_times), cmap="winter", start=0, return_hex=True)
 
         # make the isochrone polygons
         isochrone_polys = []
