@@ -1,19 +1,16 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-import streamlit as st
+import folium
+import mapclassify
+import matplotlib
 import geopandas as gpd
-#import matplotlib.pyplot as plt
 import networkx as nx
 import osmnx as ox
-#from descartes import PolygonPatch
-import shapely
-from shapely.geometry import LineString
-from shapely.geometry import Point
-from shapely.geometry import Polygon
-import folium
 import osmnx.utils_graph
-import sklearn
+import streamlit as st
+# from descartes import PolygonPatch
+from shapely.geometry import Point
 
 #%matplotlib inline
 
