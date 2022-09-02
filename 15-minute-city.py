@@ -43,75 +43,75 @@ submit = form.form_submit_button("Generate map")
 if submit:
     with st.spinner("Getting there..."):
 
-    # download the street network
-    G = ox.graph_from_address(place, network_type=network_type)
+        # download the street network
+        G = ox.graph_from_address(place, network_type=network_type)
 
-    # find the centermost node and then project the graph to UTM
-    gdf_nodes = ox.graph_to_gdfs(G, edges=False)
-    x, y = gdf_nodes["geometry"].unary_union.centroid.xy
-    center_node = ox.distance.nearest_nodes(G, x[0], y[0])
-    G = ox.project_graph(G)
+        # find the centermost node and then project the graph to UTM
+        gdf_nodes = ox.graph_to_gdfs(G, edges=False)
+        x, y = gdf_nodes["geometry"].unary_union.centroid.xy
+        center_node = ox.distance.nearest_nodes(G, x[0], y[0])
+        G = ox.project_graph(G)
 
-    # add an edge attribute for time in minutes required to traverse each edge
-    meters_per_minute = travel_speed * 1000 / 60  # km per hour to m per minute
-    for _, _, _, data in G.edges(data=True, keys=True):
-        data["time"] = data["length"] / meters_per_minute
+        # add an edge attribute for time in minutes required to traverse each edge
+        meters_per_minute = travel_speed * 1000 / 60  # km per hour to m per minute
+        for _, _, _, data in G.edges(data=True, keys=True):
+            data["time"] = data["length"] / meters_per_minute
 
-    # get one color for each isochrone
-    iso_colors = ox.plot.get_colors(n=len(trip_times), cmap="autumn", start=0, return_hex=True)
+        # get one color for each isochrone
+        iso_colors = ox.plot.get_colors(n=len(trip_times), cmap="autumn", start=0, return_hex=True)
 
-    # make the isochrone polygons
-    isochrone_polys = []
-    for trip_time in sorted(trip_times, reverse=True):
-        subgraph = nx.ego_graph(G, center_node, radius=trip_time, distance="time")
-        node_points = [Point((data["x"], data["y"])) for node, data in subgraph.nodes(data=True)]
-        bounding_poly = gpd.GeoSeries(node_points).unary_union.convex_hull
-        isochrone_polys.append(bounding_poly)
+        # make the isochrone polygons
+        isochrone_polys = []
+        for trip_time in sorted(trip_times, reverse=True):
+            subgraph = nx.ego_graph(G, center_node, radius=trip_time, distance="time")
+            node_points = [Point((data["x"], data["y"])) for node, data in subgraph.nodes(data=True)]
+            bounding_poly = gpd.GeoSeries(node_points).unary_union.convex_hull
+            isochrone_polys.append(bounding_poly)
 
-    # get amenities for place
-    amenities = ox.geometries_from_address(place, tags={"amenity":True}, dist=1000)
+        # get amenities for place
+        amenities = ox.geometries_from_address(place, tags={"amenity":True}, dist=1000)
 
-    # plot the network, add isochrones as colored descartes polygon patches, then add amenities
-    #fig, ax = ox.plot_graph(
-        #G, show=False, close=False, edge_color="#999999", edge_alpha=0.2, node_size=0
-    #)
-    #for polygon, fc in zip(isochrone_polys, iso_colors):
-        #patch = PolygonPatch(polygon, fc=fc, ec="none", alpha=0.6, zorder=-1)
-        #ax.add_patch(patch)
+        # plot the network, add isochrones as colored descartes polygon patches, then add amenities
+        #fig, ax = ox.plot_graph(
+            #G, show=False, close=False, edge_color="#999999", edge_alpha=0.2, node_size=0
+        #)
+        #for polygon, fc in zip(isochrone_polys, iso_colors):
+            #patch = PolygonPatch(polygon, fc=fc, ec="none", alpha=0.6, zorder=-1)
+            #ax.add_patch(patch)
 
-    #amenities.plot(color="white", markersize=1, ax=ax)
+        #amenities.plot(color="white", markersize=1, ax=ax)
 
-    # not working as expected...
-    #m = ox.folium.plot_graph_folium(G, popup_attribute="name", weight=2, color="#8b0000", fit_bounds=True, tiles="CartoDB positron")
+        # not working as expected...
+        #m = ox.folium.plot_graph_folium(G, popup_attribute="name", weight=2, color="#8b0000", fit_bounds=True, tiles="CartoDB positron")
 
-    m = folium.Map(tiles="CartoDB positron")
+        m = folium.Map(tiles="CartoDB positron")
 
-    # edges ...
-    m = (
-        osmnx.utils_graph.graph_to_gdfs(G, nodes=False)
-        .loc[:, ["name", "geometry"]]
-        .explore(name="edges", m=m, height=400, width=800)
-    )
+        # edges ...
+        m = (
+            osmnx.utils_graph.graph_to_gdfs(G, nodes=False)
+            .loc[:, ["name", "geometry"]]
+            .explore(name="edges", m=m, height=400, width=800)
+        )
 
-    # isochrones,  NB CRS
-    m = gpd.GeoDataFrame(
-        {"color": iso_colors, "trip time": trip_times},
-        geometry=isochrone_polys,
-        crs=G.graph["crs"],
-    ).explore(
-        m=m,
-        name="isochrones",
-        style_kwds={"style_function": lambda p: {"color": p["properties"]["color"]}},
-    )
-    # ameneties
-    m = amenities.loc[:, ["amenity", "name", "geometry"]].explore(
-        "amenity", m=m, name="amenities"
-    )
+        # isochrones,  NB CRS
+        m = gpd.GeoDataFrame(
+            {"color": iso_colors, "trip time": trip_times},
+            geometry=isochrone_polys,
+            crs=G.graph["crs"],
+        ).explore(
+            m=m,
+            name="isochrones",
+            style_kwds={"style_function": lambda p: {"color": p["properties"]["color"]}},
+        )
+        # ameneties
+        m = amenities.loc[:, ["amenity", "name", "geometry"]].explore(
+            "amenity", m=m, name="amenities"
+        )
 
-    m.fit_bounds(m.get_bounds(), padding=(30, 30))
+        m.fit_bounds(m.get_bounds(), padding=(30, 30))
 
-    folium.LayerControl().add_to(m)
-    m
+        folium.LayerControl().add_to(m)
+        m
 
 
 
