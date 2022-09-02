@@ -6,3 +6,4 @@ shapely == 1.8.4
 folium == 0.12.1.post1
 sklearn
 matplotlib ~= 3.5.1
+mapclassify
