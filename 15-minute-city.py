@@ -67,12 +67,7 @@ def get_amenities(place):
 def plot_map(G, iso_colors, isochrone_polys, amenities):
     m = folium.Map(tiles="CartoDB positron")
 
-    # edges
-    m = (
-        osmnx.utils_graph.graph_to_gdfs(G, nodes=False)
-            .loc[:, ["name", "geometry"]]
-            .explore(name="edges", m=m)
-    )
+    
 
     # isochrones,  NB CRS
     m = gpd.GeoDataFrame(
