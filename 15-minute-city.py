@@ -60,7 +60,7 @@ def make_map(place):
 #get amenities for place
 @st.cache
 def get_amenities(place):
-    amenities = ox.geometries_from_address(place, tags={"amenity": True}, dist=1000)
+    amenities = ox.geometries_from_address(place, tags={"amenity": True}, dist=1500)
     return amenities
 
 #plot map
