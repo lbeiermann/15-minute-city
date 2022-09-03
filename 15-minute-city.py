@@ -14,11 +14,13 @@ import streamlit as st
 from shapely.geometry import Point
 
 # title and layout
-st.set_page_config(page_title="The 15-Minute-Map 🗺️")
-st.title("The 15-Minute-Map 🗺️")
+st.set_page_config(layout="wide", page_title="The 15-Minute-Map 🗺️")
+with col1:
+    st.title("The 15-Minute-Map 🗺️")
 
 # display text
-st.write("Mapping the 15-minute city: Use this app to map all local amenities you can reach via a 5-/10-/15-minute walk from any address in the world!")
+with col2:
+    st.write("Mapping the 15-minute city: Use this app to map all local amenities you can reach via a 5-/10-/15-minute walk from any address in the world!")
 
 # address input
 place = st.text_input("Enter street address")
