@@ -99,7 +99,7 @@ if place:
         m = main(place)
     except (KeyError, NameError):
         st.error("Please try another address.")
-    st_data = st_folium(m, width=1000)
+    st_data = st_folium(m)
 
 
 
