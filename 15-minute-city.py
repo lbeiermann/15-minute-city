@@ -30,7 +30,7 @@ trip_times = [15, 10, 5]  # in minutes
 travel_speed = 4.8  # walking speed in km/hour
 
 # make map containing isochrone polygons
-@st.cache
+#@st.cache
 def make_poly_map(place):
     # download the street network
     G = ox.graph_from_address(place, network_type=network_type)
@@ -58,13 +58,13 @@ def make_poly_map(place):
     return G, iso_colors, isochrone_polys
 
 #get amenities for place
-@st.cache
+#@st.cache
 def get_amenities(place):
     amenities = ox.geometries_from_address(place, tags={"amenity": True}, dist=1000)
     return amenities
 
 #plot map
-@st.cache
+#@st.cache
 def plot_map(G, iso_colors, isochrone_polys, amenities):
     m = folium.Map(tiles="CartoDB positron")
 
