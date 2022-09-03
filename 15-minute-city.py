@@ -97,7 +97,7 @@ if place:
     #with st.spinner("Getting there at 4.8 km/h..."):
     try:
         m = main(place)
-    except KeyError:
+    except (KeyError, NameError):
         st.error("Please try another address.")
     st_data = st_folium(m, width=725)
 
