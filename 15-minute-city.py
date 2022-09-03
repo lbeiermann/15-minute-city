@@ -30,7 +30,7 @@ trip_times = [15, 10, 5]  # in minutes
 travel_speed = 4.8  # walking speed in km/hour
 
 # make map containing isochrone polygons
-#@st.cache
+@st.cache
 def make_poly_map(place):
     # download the street network
     G = ox.graph_from_address(place, network_type=network_type)
@@ -102,11 +102,9 @@ def main(place):
     m = plot_map(G, iso_colors, isochrone_polys, amenities)
     return m
 
-
-if place != "":
+if place:
     with st.spinner("Getting there at 4.8 km/h..."):
-        st_data = st_folium(main(place), width=725)
-        place = ""
+        st_data = folium_static(main(place), width=725)
 
 
 
