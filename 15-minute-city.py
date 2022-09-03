@@ -57,13 +57,13 @@ def make_map(place):
         isochrone_polys.append(bounding_poly)
     return G, iso_colors, isochrone_polys
 
-#get amenities for place
+# get amenities for place
 @st.cache
 def get_amenities(place):
     amenities = ox.geometries_from_address(place, tags={"amenity": True}, dist=1000)
     return amenities
 
-#plot map
+# plot map
 def plot_map(G, iso_colors, isochrone_polys, amenities):
     m = folium.Map(tiles="CartoDB positron")
 
@@ -101,6 +101,7 @@ if place:
             st.error("Please try another address.")
     st_data = st_folium(m, width=1200)
 
+st.markdown("by **@lea_bei**")
 
 
 
