@@ -60,7 +60,7 @@ def make_map(place):
 #get amenities for place
 @st.cache
 def get_amenities(place):
-    amenities = ox.geometries_from_address(place, tags={"amenity": True}, dist=1500)
+    amenities = ox.geometries_from_address(place, tags={"amenity": True}, dist=1000)
     return amenities
 
 #plot map
@@ -94,11 +94,11 @@ def main(place):
     return m
 
 if place:
-    #with st.spinner("Getting there at 4.8 km/h..."):
-    try:
-        m = main(place)
-    except (KeyError, NameError):
-        st.error("Please try another address.")
+    with st.spinner("Getting there at 4.8 km/h..."):
+        try:
+            m = main(place)
+        except (KeyError, NameError):
+            st.error("Please try another address.")
     st_data = st_folium(m, width=1200)
 
 
