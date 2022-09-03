@@ -58,7 +58,7 @@ def make_poly_map(place):
     return G, iso_colors, isochrone_polys
 
 #get amenities for place
-#@st.cache
+@st.cache
 def get_amenities(place):
     amenities = ox.geometries_from_address(place, tags={"amenity": True}, dist=1000)
     return amenities
