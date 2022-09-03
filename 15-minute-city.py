@@ -95,7 +95,7 @@ def plot_map(G, iso_colors, isochrone_polys, amenities):
     folium.LayerControl().add_to(m)
     return m
 
-@st.cache(hash_funcs={builtins.weakref: lambda _: None})
+#@st.cache(hash_funcs={builtins.weakref: lambda _: None})
 def main(place):
     G, iso_colors, isochrone_polys = make_poly_map(place)
     amenities = get_amenities(place)
