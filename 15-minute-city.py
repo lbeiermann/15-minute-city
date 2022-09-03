@@ -64,7 +64,6 @@ def get_amenities(place):
     return amenities
 
 #plot map
-@st.experimental_memo
 def plot_map(G, iso_colors, isochrone_polys, amenities):
     m = folium.Map(tiles="CartoDB positron")
 
@@ -101,9 +100,10 @@ def main(place):
     m = plot_map(G, iso_colors, isochrone_polys, amenities)
     return m
 
-if place:
+if st.button("Generate map"):
     with st.spinner("Getting there at 4.8 km/h..."):
-        st_data = st_folium(main(place), width=725)
+        m = main(place)
+    st_data = st_folium(m, width=725)
 
 
 
