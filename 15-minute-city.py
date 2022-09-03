@@ -64,7 +64,7 @@ def get_amenities(place):
     return amenities
 
 #plot map
-#@st.cache
+@st.experimental_memo
 def plot_map(G, iso_colors, isochrone_polys, amenities):
     m = folium.Map(tiles="CartoDB positron")
 
@@ -95,7 +95,6 @@ def plot_map(G, iso_colors, isochrone_polys, amenities):
     folium.LayerControl().add_to(m)
     return m
 
-#@st.cache(hash_funcs={builtins.weakref: lambda _: None})
 def main(place):
     G, iso_colors, isochrone_polys = make_poly_map(place)
     amenities = get_amenities(place)
