@@ -13,10 +13,6 @@ import streamlit as st
 # from descartes import PolygonPatch
 from shapely.geometry import Point
 
-#%matplotlib inline
-
-# ox.config(log_console=False, use_cache=True)
-
 # title and layout
 st.set_page_config(page_title="The 15-Minute-Map 🗺️")
 st.title("The 15-Minute-Map 🗺️")
@@ -24,7 +20,7 @@ st.title("The 15-Minute-Map 🗺️")
 # display text
 st.write("Mapping the 15-minute city: Use this app to map all local amenities you can reach via a 5-/10-/15-minute walk from any address in the world!")
 
-# enter address
+# address input
 place = st.text_input("Enter street address")
 st.text("e.g. 712 Red Bark Lane, Henderson, NV 89011, USA")
 
@@ -33,9 +29,9 @@ network_type = "walk"
 trip_times = [15, 10, 5]  # in minutes
 travel_speed = 4.8  # walking speed in km/hour
 
-# download the street network
+# make map containing isochrone polygons
 @st.cache
-def make_street_network(place):
+def make_poly_map(place):
     # download the street network
     G = ox.graph_from_address(place, network_type=network_type)
 
@@ -50,8 +46,6 @@ def make_street_network(place):
     for _, _, _, data in G.edges(data=True, keys=True):
         data["time"] = data["length"] / meters_per_minute
 
-@st.cache
-def iso_polys():
     # get one color for each isochrone
     iso_colors = ox.plot.get_colors(n=len(trip_times), cmap="autumn", start=0, return_hex=True)
     # make the isochrone polygons
@@ -61,16 +55,20 @@ def iso_polys():
         node_points = [Point((data["x"], data["y"])) for node, data in subgraph.nodes(data=True)]
         bounding_poly = gpd.GeoSeries(node_points).unary_union.convex_hull
         isochrone_polys.append(bounding_poly)
+    return G, iso_colors, isochrone_polys
 
+#get amenities for place
 @st.cache
 def get_amenities(place):
     amenities = ox.geometries_from_address(place, tags={"amenity": True}, dist=1000)
+    return amenities
 
+#plot map
 @st.cache
-def plot_map():
+def plot_map(G, iso_colors, isochrone_polys, amenities):
     m = folium.Map(tiles="CartoDB positron")
 
-    # edges ...
+    # edges
     m = (
         osmnx.utils_graph.graph_to_gdfs(G, nodes=False)
             .loc[:, ["name", "geometry"]]
@@ -87,7 +85,7 @@ def plot_map():
         name="isochrones",
         style_kwds={"style_function": lambda p: {"color": p["properties"]["color"]}},
     )
-    # ameneties
+    # amenities
     m = amenities.loc[:, ["amenity", "name", "geometry"]].explore(
         "amenity", m=m, name="amenities"
     )
@@ -95,17 +93,21 @@ def plot_map():
     m.fit_bounds(m.get_bounds(), padding=(30, 30))
 
     folium.LayerControl().add_to(m)
+    return m
 
+@st.cache
 def main(place):
-    network = make_street_network(place)
-
+    G, iso_colors, isochrone_polys = make_poly_map(place)
+    amenities = get_amenities(place)
+    m = plot_map(G, iso_colors, isochrone_polys, amenities)
+    return m
 
 
 if place:
     with st.spinner("Getting there at 4.8 km/h..."):
+        st_data = st_folium(main(place), width=725)
 
 
 
 
-    st_data = st_folium(m, width=725)
 
