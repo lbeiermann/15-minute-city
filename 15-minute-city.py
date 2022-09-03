@@ -18,9 +18,6 @@ st.set_page_config(layout="wide", page_title="The 15-Minute-Map 🗺️")
 col1, col2 = st.columns(2)
 with col1:
     st.title("The 15-Minute-Map 🗺️")
-
-# display text
-with col2:
     st.write("Mapping the 15-minute city: Use this app to map all local amenities you can reach via a 5-/10-/15-minute walk from any address in the world!")
 
 # address input
