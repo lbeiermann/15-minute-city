@@ -100,10 +100,10 @@ def main(place):
     m = plot_map(G, iso_colors, isochrone_polys, amenities)
     return m
 
-if st.button("Generate map"):
-    #with st.spinner("Getting there at 4.8 km/h..."):
-        #m = main(place)
-    st_data = st_folium(main(place), width=725)
+if place:
+    with st.spinner("Getting there at 4.8 km/h..."):
+        m = main(place)
+    st_data = st_folium(m, width=725)
 
 
 
