@@ -15,6 +15,7 @@ from shapely.geometry import Point
 
 # title and layout
 st.set_page_config(layout="wide", page_title="The 15-Minute-Map 🗺️")
+col1, col2 = st.columns(2)
 with col1:
     st.title("The 15-Minute-Map 🗺️")
 
