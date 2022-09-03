@@ -104,7 +104,7 @@ def main(place):
 
 if place:
     with st.spinner("Getting there at 4.8 km/h..."):
-        st_data = folium_static(main(place), width=725)
+        st_data = st_folium(main(place), width=725)
 
 
 
