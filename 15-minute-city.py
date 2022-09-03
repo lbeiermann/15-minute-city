@@ -103,9 +103,10 @@ def main(place):
     return m
 
 
-if place:
+if place != "":
     with st.spinner("Getting there at 4.8 km/h..."):
         st_data = st_folium(main(place), width=725)
+        place = ""
 
 
 
