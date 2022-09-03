@@ -84,7 +84,7 @@ def plot_map(G, iso_colors, isochrone_polys, amenities):
 
     m.fit_bounds(m.get_bounds(), padding=(30, 30))
 
-    folium.LayerControl().add_to(m)
+    folium.LayerControl("topleft", collapsed=False).add_to(m)
     return m
 
 def main(place):
