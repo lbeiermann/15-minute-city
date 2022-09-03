@@ -30,7 +30,7 @@ trip_times = [15, 10, 5]  # in minutes
 travel_speed = 4.8  # walking speed in km/hour
 
 # make map containing isochrone polygons
-@st.cache
+@st.experimental_memo
 def make_poly_map(place):
     # download the street network
     G = ox.graph_from_address(place, network_type=network_type)
