@@ -18,7 +18,7 @@ st.set_page_config(layout="wide", page_title="The 15-Minute-Map 🗺️")
 col1, col2 = st.columns(2)
 with col1:
     st.title("The 15-Minute-Map 🗺️")
-    st.write("Mapping the 15-minute city: Use this app to map all local amenities you can reach via a 5-/10-/15-minute walk from any address in the world!")
+    st.write("Mapping the 15-minute city: Use this web app to map all local amenities you can reach via a 5-/10-/15-minute walk from any address in the world!")
 
 # address input
 place = st.text_input("Enter street address")
@@ -99,7 +99,7 @@ if place:
         m = main(place)
     except (KeyError, NameError):
         st.error("Please try another address.")
-    st_data = st_folium(m, width=725)
+    st_data = st_folium(m, width=1000)
 
 
 
